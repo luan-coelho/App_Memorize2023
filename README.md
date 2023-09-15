@@ -1,3 +1,6 @@
+![screencast-1](https://github.com/SosthenesLima/App_Memorize2023/assets/64558894/45329734-ca1b-41e5-8713-d68c3f22cf17)
+
+
 <h1>Sobre o jogo </h1>
 Você precisa virar as cartas uma por uma para encontrar as mesmas cartas. 
 Ao encontrar duas cartas idênticas, você ganha um ponto e essas cartas desaparecerão. 
