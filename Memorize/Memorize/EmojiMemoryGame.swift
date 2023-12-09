@@ -8,17 +8,25 @@
 
 import Foundation
 
+enum Difficulty {
+    case easy, medium, hard
+}
     //Aqui está a nossa ViewModel
 class EmojiMemoryGame: ObservableObject {
     //Nossa ViewModel possui uma var que é o Model, ele pode conversar com o Model de uma véz
-    @Published private var model: MemoryGame<String> = EmojiMemoryGame.createMemoryGame()
-    
-    static func createMemoryGame() -> MemoryGame<String> {
-        let emojis = ["🧛🏻‍♂️","🕷️","🤡"]
-        return MemoryGame<String>(numberOfPairsOfCards: emojis.count) { pairIndex in
-           return emojis[pairIndex]
+    @Published private var model: MemoryGame<String>
+
+       init(difficulty: Difficulty) {
+           self.model = EmojiMemoryGame.createMemoryGame(difficulty: difficulty)
        }
-    }
+
+       static func createMemoryGame(difficulty: Difficulty) -> MemoryGame<String> {
+           let emojis = ["🧛🏻‍♂️","🕷️","🤡", "🎃", "👻", "🧟‍♂️"]
+           let numberOfPairs = (difficulty == .easy) ? 3 : (difficulty == .medium) ? 4 : 6
+           return MemoryGame<String>(numberOfPairsOfCards: numberOfPairs) { pairIndex in
+               return emojis[pairIndex % emojis.count]
+           }
+       }
     
   
     

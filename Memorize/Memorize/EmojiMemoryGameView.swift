@@ -59,11 +59,4 @@ struct CardView: View {
         min(size.width, size.height) * 0.75
     }
 }
-    
-    struct ContentView_Previews: PreviewProvider {
-        static var previews: some View {
-            EmojiMemoryGameView(viewModel: EmojiMemoryGame())
-        }
-    }
-    
 

@@ -11,7 +11,6 @@ import Foundation
 struct MemoryGame<CardContent> where CardContent: Equatable {
     var cards: Array<Card>
     
-    
     var indexOfTheOneAndOnlyFaceUpCard: Int? {
         get { cards.indices.filter { cards[$0].isFaceUp}.only}
         set {
@@ -38,12 +37,12 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     
     init(numberOfPairsOfCards: Int, cardContentFactory: (Int) -> CardContent) {
         cards = Array<Card>()
-        for pairIndex in 0..<numberOfPairsOfCards  {
+        for pairIndex in 0..<numberOfPairsOfCards {
             let content = cardContentFactory(pairIndex)
             cards.append(Card(content: content, id: pairIndex*2))
             cards.append(Card(content: content, id: pairIndex*2+1))
         }
-        
+        cards.shuffle() // Embaralha as cartas
     }
     
     struct Card: Identifiable {
