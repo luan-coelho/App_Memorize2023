@@ -17,12 +17,20 @@ struct EmojiMemoryGameView: View {
             }
             .padding(5)
         }
-    
         
         .padding()
         .foregroundColor(Color.orange)
         
-        
+        if viewModel.isGameFinished {
+            Button("Novo Jogo") {
+                   viewModel.restartGame()
+               }
+               .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
+               .background(Color.blue)
+               .foregroundColor(Color.white)
+               .cornerRadius(10)
+               .padding(.bottom, 20)
+        }
     }
 }
 

@@ -20,6 +20,10 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         }
     }
     
+    var isGameFinished: Bool {
+            cards.allSatisfy { $0.isMatched }
+        }
+    
     mutating func choose(card: Card) {
         print("card chosen: \(card)")
         if let chosenIndex = cards.firstIndex(matching: card), !cards[chosenIndex].isFaceUp, !cards[chosenIndex].isMatched {
