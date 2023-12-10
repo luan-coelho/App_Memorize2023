@@ -10,29 +10,54 @@ import SwiftUI
 struct DifficultySelectionView: View {
     @State private var selectedDifficulty: Difficulty = .easy
     @State private var isGameViewPresented = false
-
+    
     var body: some View {
         VStack {
-            Text("Escolha a Dificuldade")
+
+            Text("Escolha a dificuldade")
                 .font(.largeTitle)
 
-            Button("Fácil") {
-                selectedDifficulty = .easy
-                isGameViewPresented = true
-            }
-            .padding()
+            HStack {
+                // Botão Fácil
+                VStack {
+                    Button("Fácil") {
+                        selectedDifficulty = .easy
+                        isGameViewPresented = true
+                    }
+                    .padding()
+                    .foregroundColor(.white)                }
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .background(Color.blue)
+                .cornerRadius(10)
+                .padding()
 
-            Button("Médio") {
-                selectedDifficulty = .medium
-                isGameViewPresented = true
-            }
-            .padding()
+                // Botão Médio
+                VStack {
+                    Button("Médio") {
+                        selectedDifficulty = .medium
+                        isGameViewPresented = true
+                    }
+                    .padding()
+                    .foregroundColor(.white)                }
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .background(Color.green)
+                .cornerRadius(10)
+                .padding()
 
-            Button("Difícil") {
-                selectedDifficulty = .hard
-                isGameViewPresented = true
+                // Botão Difícil
+                VStack {
+                    Button("Difícil") {
+                        selectedDifficulty = .hard
+                        isGameViewPresented = true
+                    }
+                    .padding()
+                    .foregroundColor(.white)
+                }
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .background(Color.red)
+                .cornerRadius(10)
+                .padding()
             }
-            .padding()
         }
         .sheet(isPresented: $isGameViewPresented) {
             EmojiMemoryGameView(viewModel: EmojiMemoryGame(difficulty: selectedDifficulty))

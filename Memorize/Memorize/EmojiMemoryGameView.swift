@@ -11,26 +11,41 @@ struct EmojiMemoryGameView: View {
    @ObservedObject var viewModel: EmojiMemoryGame
     
     var body: some View {
-        Grid(viewModel.cards) { card in
-            CardView (card: card).onTapGesture {
-                viewModel.choose(card: card)
+        
+        VStack {
+            Text("Tempo Restante: \(viewModel.timeRemaining)")
+                .padding(.top, 20)
+            
+            Grid(viewModel.cards) { card in
+                CardView (card: card).onTapGesture {
+                    viewModel.choose(card: card)
+                }
+                .padding(5)
             }
-            .padding(5)
+            
+            .padding()
+            .foregroundColor(Color.orange)
         }
         
-        .padding()
-        .foregroundColor(Color.orange)
-        
-        if viewModel.isGameFinished {
-            Button("Novo Jogo") {
-                   viewModel.restartGame()
+        if viewModel.showEndGameDialog {
+                   VStack {
+                       Text(viewModel.isGameWon ? "Parabéns!" : "Que pena, mas o tempo acabou")
+                           .foregroundColor(viewModel.isGameWon ? .green : .red)
+                           .fontWeight(.bold)
+                       Button("Jogar Novamente") {
+                           viewModel.restartGame()
+                           viewModel.showEndGameDialog = false
+                       }
+                       .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
+                       .background(Color.blue)
+                       .foregroundColor(Color.white)
+                       .cornerRadius(10)
+                       .padding(.bottom, 20)
+                   }
+                   .frame(maxWidth: .infinity, minHeight: 100)
+                   .background(Color.white)
+                   .cornerRadius(20).shadow(radius: 10)
                }
-               .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
-               .background(Color.blue)
-               .foregroundColor(Color.white)
-               .cornerRadius(10)
-               .padding(.bottom, 20)
-        }
     }
 }
 
