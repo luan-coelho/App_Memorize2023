@@ -83,11 +83,11 @@ struct EndGameDialog: View {
     
     var body: some View {
         VStack {
-            Text(isGameWon ? "Parabéns!" : "Que pena, mas o tempo acabou")
+            Text(isGameWon ? "Parabéns, você combinou todas as cartas dentro do tempo!" : "Que pena, mas o tempo acabou")
                 .font(.headline)
                 .foregroundColor(isGameWon ? .green : .red)
                 .fontWeight(.bold)
-                .padding(.top, 20)
+                .padding(.top, 10)
             
             Button("Jogar Novamente", action: action)
                 .padding()
@@ -104,7 +104,7 @@ struct EndGameDialog: View {
         .background(Color.white)
         .cornerRadius(20)
         .shadow(radius: 10)
-        .padding()
+        .padding(10)
     }
 }
 

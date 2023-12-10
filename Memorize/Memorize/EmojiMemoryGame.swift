@@ -37,7 +37,7 @@ class EmojiMemoryGame: ObservableObject {
     public func getTimeLimit(for difficulty: Difficulty) -> Int {
         switch difficulty {
         case .easy:
-            return 30
+            return 20
         case .medium:
             return 15
         case .hard:

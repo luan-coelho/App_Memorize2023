@@ -14,10 +14,16 @@ struct DifficultySelectionView: View {
     var body: some View {
         VStack {
 
-            Text("Escolha a dificuldade")
+            Text("Memorizar bandeira")
                 .font(.largeTitle)
+                .bold()
+            
+            Text("🇧🇷🇨🇦🇦🇷").font(.system(size: 50))
+            
+            Text("Escolha a dificuldade")
+                .font(.title3)
 
-            HStack {
+            VStack {
                 // Botão Fácil
                 VStack {
                     Button("Fácil") {
