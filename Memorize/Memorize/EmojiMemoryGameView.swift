@@ -14,9 +14,9 @@ struct EmojiMemoryGameView: View {
             let difficultyColor: Color = {
                 switch viewModel.difficulty {
                 case .easy:
-                    return Color.green
+                    return Color.blue
                 case .medium:
-                    return Color.yellow
+                    return Color.green
                 case .hard:
                     return Color.red
                 }
@@ -29,7 +29,7 @@ struct EmojiMemoryGameView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             
             Grid(viewModel.cards) { card in
-                CardView(card: card)
+                CardView(card: card, difficultyColor: difficultyColor)
                     .onTapGesture {
                         withAnimation(.linear(duration: 0.75)) {
                             viewModel.choose(card: card)
@@ -56,6 +56,7 @@ struct EmojiMemoryGameView: View {
 
 struct CardView: View {
     var card: MemoryGame<String>.Card
+    var difficultyColor: Color
     
     var body: some View {
         GeometryReader { geometry in
@@ -66,7 +67,7 @@ struct CardView: View {
                     Text(card.content)
                 } else {
                     if !card.isMatched {
-                        RoundedRectangle(cornerRadius: 10.0).fill(Color.blue)
+                        RoundedRectangle(cornerRadius: 10.0).fill(difficultyColor)
                     }
                 }
             }
