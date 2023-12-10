@@ -9,7 +9,7 @@ class EmojiMemoryGame: ObservableObject {
     @Published var timeRemaining: Int = 0
     
     private var timer: Timer?
-    private var difficulty: Difficulty
+    public var difficulty: Difficulty
     
     var isGameFinished: Bool {
         model.isGameFinished
@@ -22,14 +22,14 @@ class EmojiMemoryGame: ObservableObject {
         self.startTimer()
     }
     
-    private func getTimeLimit(for difficulty: Difficulty) -> Int {
+    public func getTimeLimit(for difficulty: Difficulty) -> Int {
         switch difficulty {
         case .easy:
             return 60 // Exemplo: 60 segundos para fácil
         case .medium:
             return 40 // Exemplo: 45 segundos para médio
         case .hard:
-            return 2 // Exemplo: 30 segundos para difícil
+            return 5 // Exemplo: 30 segundos para difícil
         }
     }
     

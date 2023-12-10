@@ -13,8 +13,9 @@ struct EmojiMemoryGameView: View {
     var body: some View {
         
         VStack {
-            Text("Tempo Restante: \(viewModel.timeRemaining)")
+            Text("Tempo restante: \(viewModel.timeRemaining)")
                 .padding(.top, 20)
+                .foregroundColor(viewModel.timeRemaining > (viewModel.getTimeLimit(for: viewModel.difficulty) / 4) ?.black : .red)
             
             Grid(viewModel.cards) { card in
                 CardView (card: card).onTapGesture {
