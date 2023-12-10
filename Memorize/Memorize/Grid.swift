@@ -2,7 +2,6 @@
 //  Grid.swift
 //  Memorize
 //
-//  Created by Sósthenes Oliveira Lima on 17/09/23.
 //
 
 import SwiftUI
@@ -33,10 +32,10 @@ struct Grid<Item, ItemView>: View  where Item: Identifiable, ItemView: View {
     func body(for item: Item, in layout: GridLayout) -> some View {
         let index = items.firstIndex(matching: item)!
         return viewForItem(item)
-                    .frame(width: layout.itemSize.width, height: layout.itemSize.height)
-                    .position(layout.location(ofItemAt: index))
-                }
-            }
-        
+            .frame(width: layout.itemSize.width, height: layout.itemSize.height)
+            .position(layout.location(ofItemAt: index))
+    }
+}
+
 
 

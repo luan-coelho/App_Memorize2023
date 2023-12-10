@@ -2,7 +2,6 @@
 //  MemoryGame.swift
 //  Memorize
 //
-//  Created by Sósthenes Oliveira Lima on 02/09/23.
 //
 
 import Foundation
@@ -21,8 +20,8 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
     }
     
     var isGameFinished: Bool {
-            cards.allSatisfy { $0.isMatched }
-        }
+        cards.allSatisfy { $0.isMatched }
+    }
     
     mutating func choose(card: Card) {
         if let chosenIndex = cards.firstIndex(matching: card), !cards[chosenIndex].isFaceUp, !cards[chosenIndex].isMatched {
@@ -33,7 +32,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
                 }
                 self.cards[chosenIndex].isFaceUp = true
             } else {
-                   indexOfTheOneAndOnlyFaceUpCard = chosenIndex
+                indexOfTheOneAndOnlyFaceUpCard = chosenIndex
             }
         }
     }
@@ -53,9 +52,7 @@ struct MemoryGame<CardContent> where CardContent: Equatable {
         var isMatched: Bool = false
         var content: CardContent
         var id: Int
-        
     }
-    
 }
 
 
