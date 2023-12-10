@@ -2,8 +2,6 @@
 //  EmojiMemomyGameView.swift
 //  Memorize
 //
-//  Created by Sósthenes Oliveira Lima on 20/08/23.
-//
 
 import SwiftUI
 
@@ -11,15 +9,14 @@ struct EmojiMemoryGameView: View {
     @ObservedObject var viewModel: EmojiMemoryGame
     
     var body: some View {
-        
         VStack {
             
             let difficultyColor: Color = {
                 switch viewModel.difficulty {
                 case .easy:
-                    return Color.blue
-                case .medium:
                     return Color.green
+                case .medium:
+                    return Color.yellow
                 case .hard:
                     return Color.red
                 }
@@ -32,27 +29,66 @@ struct EmojiMemoryGameView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             
             Grid(viewModel.cards) { card in
-                CardView(card: card).onTapGesture {
-                    viewModel.choose(card: card)
-                }
-                .padding(5)
+                CardView(card: card)
+                    .onTapGesture {
+                        withAnimation(.linear(duration: 0.75)) {
+                            viewModel.choose(card: card)
+                        }
+                    }
+                    .padding(5)
             }
             .padding()
             .foregroundColor(difficultyColor)
         }
+        .blur(radius: viewModel.showEndGameDialog ? 10 : 0)
         
         if viewModel.showEndGameDialog {
-            VStack {
-                Text(viewModel.isGameWon ? "Parabéns!" : "Que pena, mas o tempo acabou")
-                    .font(.headline)
-                    .foregroundColor(viewModel.isGameWon ? .green : .red)
-                    .fontWeight(.bold)
-                    .padding(.top, 20)
-                
-                Button("Jogar Novamente") {
+            EndGameDialog(isGameWon: viewModel.isGameWon, action: {
+                withAnimation {
                     viewModel.restartGame()
                     viewModel.showEndGameDialog = false
                 }
+            })
+            .transition(.scale)
+        }
+    }
+}
+
+struct CardView: View {
+    var card: MemoryGame<String>.Card
+    
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack {
+                if card.isFaceUp {
+                    RoundedRectangle(cornerRadius: 10.0).fill(Color.white)
+                    RoundedRectangle(cornerRadius: 10.0).stroke(lineWidth: 3)
+                    Text(card.content)
+                } else {
+                    if !card.isMatched {
+                        RoundedRectangle(cornerRadius: 10.0).fill(Color.blue)
+                    }
+                }
+            }
+            .font(Font.system(size: min(geometry.size.width, geometry.size.height) * 0.75))
+            .shadow(radius: 5)
+        }
+    }
+}
+
+struct EndGameDialog: View {
+    var isGameWon: Bool
+    var action: () -> Void
+    
+    var body: some View {
+        VStack {
+            Text(isGameWon ? "Parabéns!" : "Que pena, mas o tempo acabou")
+                .font(.headline)
+                .foregroundColor(isGameWon ? .green : .red)
+                .fontWeight(.bold)
+                .padding(.top, 20)
+            
+            Button("Jogar Novamente", action: action)
                 .padding()
                 .background(Color.blue)
                 .foregroundColor(Color.white)
@@ -62,48 +98,13 @@ struct EmojiMemoryGameView: View {
                         .stroke(Color.blue, lineWidth: 2)
                 )
                 .shadow(radius: 5)
-            }
-            .frame(maxWidth: .infinity, minHeight: 150)
-            .background(Color.white)
-            .cornerRadius(20)
-            .shadow(radius: 10)
-            .padding()
         }
+        .frame(maxWidth: .infinity, minHeight: 150)
+        .background(Color.white)
+        .cornerRadius(20)
+        .shadow(radius: 10)
+        .padding()
     }
-    
 }
 
-struct CardView: View {
-    var card: MemoryGame<String>.Card
-    
-    var body: some View{
-        GeometryReader { geometry in
-            self.body(for: geometry.size)
-        }
-    }
-    
-    func body(for size: CGSize) -> some View {
-        ZStack {
-            if card.isFaceUp {
-                RoundedRectangle(cornerRadius: corneRadius).fill(Color.white)
-                RoundedRectangle(cornerRadius: corneRadius).stroke(lineWidth: edgeLineWidth)
-                Text(card.content)
-            } else {
-                if !card.isMatched {
-                    RoundedRectangle(cornerRadius: corneRadius).fill()
-                }
-            }
-        }
-        .font(Font.system(size: fontSize(for: size)))
-    }
-    
-    
-    // Mark: - Drawing Constants
-    
-    let corneRadius: CGFloat = 10.0
-    let edgeLineWidth: CGFloat = 3
-    func fontSize(for size: CGSize) -> CGFloat {
-        min(size.width, size.height) * 0.75
-    }
-}
 
